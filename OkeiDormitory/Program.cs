@@ -16,7 +16,7 @@ namespace OkeiDormitory
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddDbContext<DormitoryDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+                options.UseSqlServer(builder.Configuration.GetConnectionString("HomeConnection"))
                 .UseSeeding((context, _) =>
                 {
                     if (!context.Set<Role>().Any(r => r.Name == "Admin"))

@@ -12,7 +12,7 @@ using OkeiDormitory.Data;
 namespace OkeiDormitory.Migrations
 {
     [DbContext(typeof(DormitoryDbContext))]
-    [Migration("20250331070641_initial")]
+    [Migration("20250401112844_initial")]
     partial class initial
     {
         /// <inheritdoc />
