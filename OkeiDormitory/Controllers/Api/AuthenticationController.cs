@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OkeiDormitory.Data;
 using OkeiDormitory.Models.Entities;
+using OkeiDormitory.Services;
 using System.Security.Claims;
 
 namespace OkeiDormitory.Controllers.Api
@@ -16,55 +17,40 @@ namespace OkeiDormitory.Controllers.Api
     public class AuthenticationController : ControllerBase
     {
         private readonly DormitoryDbContext _context;
-        public AuthenticationController(DormitoryDbContext context)
+        private readonly AccountService _accountService;
+        public AuthenticationController(DormitoryDbContext context, AccountService accountService)
         {
             _context = context;
+            _accountService = accountService;
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(string password, string login)
         {
-            var user = await _context.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Login == login);
-            if (user == null) { return Unauthorized("Пользователь не найден"); }
-            PasswordHasher<User> hasher = new PasswordHasher<User>();
-            var verification = hasher.VerifyHashedPassword(user, user.Password, password);
-            if (verification == PasswordVerificationResult.Failed) { return Unauthorized("Неверный пароль"); }
-
-            var claims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.Name, user.Login),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Role, user.Role.Name),
-            };
-
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            var authProperties = new AuthenticationProperties()
-            {
-                IsPersistent = true,
-                AllowRefresh = true
-            };
-
-            var principal = new ClaimsPrincipal(claimsIdentity);
-
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProperties);
-            return Ok("Авторизация прошла успешно");
+            var loginResult = await _accountService.Login(password, login);
+            if (!loginResult) return Unauthorized("Неверный логин или пароль!");
+            return Ok("Успешная авторизация");
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPost("register")]
         public async Task<IActionResult> Register(string password, string fullName, string login, string role)
         {
-            var user = new User()
-            {
-                FullName = fullName,
-                Login = login,
-                Role = await _context.Roles.FirstOrDefaultAsync(r => r.Name == role)
-            };
-            var hasher = new PasswordHasher<User>();
-            user.Password = hasher.HashPassword(user, password);
-            await _context.AddAsync(user);
-            await _context.SaveChangesAsync();
+            var registerResult = await _accountService.Register(password, fullName, login, role);
+            if (!registerResult) return BadRequest("Пользователь с таким логином уже существует");
             return Ok("Регистрация успешна");
+        }
+
+        [HttpGet("HashAdminPassword")]
+        public async Task<IActionResult> HashAdminPassword(string password)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Login == "Admin");
+            PasswordHasher <User> hasher = new PasswordHasher<User>();
+            var newPassword = hasher.HashPassword(user, password);
+            user.Password = newPassword;
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+            return Ok(user.Password);
         }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using OkeiDormitory.Data;
 using OkeiDormitory.Models.Entities;
+using OkeiDormitory.Services;
 using System.Net;
 
 namespace OkeiDormitory
@@ -13,23 +14,6 @@ namespace OkeiDormitory
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-            // Add services to the container.
-            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
-                {
-                    options.Cookie.HttpOnly = true;
-                    options.LoginPath = "/login";
-                    options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
-                    options.SlidingExpiration = true;
-                });
-            builder.Services.AddAuthorization();
-
-            builder.Services.AddControllers();
-            builder.Services.AddControllersWithViews();
-
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
 
             builder.Services.AddDbContext<DormitoryDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
@@ -53,6 +37,25 @@ namespace OkeiDormitory
                         await context.Set<Role>().AddAsync(new Role() { Name = "Inspector" });
                     await context.SaveChangesAsync(cancellationToken);
                 }));
+
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.Cookie.HttpOnly = true;
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
+                    options.SlidingExpiration = true;
+                });
+            builder.Services.AddAuthorization();
+
+            builder.Services.AddControllers();
+            builder.Services.AddControllersWithViews();
+
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddScoped<AccountService>();
+            builder.Services.AddTransient<QrService>();
 
             var app = builder.Build();
 
