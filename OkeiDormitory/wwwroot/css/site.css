@@ -90,4 +90,25 @@ body header {
     min-width: 800px;
     height: 500px;
     border-radius: 15px;
+    font-size: 18px;
+}
+
+.users-info{
+    padding: 15px;
+}
+
+.users-info table {
+    display: none;
+    width: 100%;
+}
+
+.user-list-header {
+    background: rgba(0,0,0,0.1);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.user-list-header:hover {
+    cursor: pointer;
+    user-select: none;
 }

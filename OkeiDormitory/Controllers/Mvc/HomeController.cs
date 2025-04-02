@@ -41,7 +41,7 @@ namespace OkeiDormitory.Controllers.Mvc
         [Authorize(Roles = "Admin,Administration")]
         public async Task<IActionResult> Administration()
         {
-            var users = await _context.Users.ToListAsync();
+            var users = await _context.Users.Include(u => u.Role).ToListAsync();
             var vm = new AdministrationViewModel()
             {
                 Users = users

@@ -4,10 +4,31 @@
     Layout = "_Layout";
 }
 
-<div class="user-list">
-    @foreach (var user in Model.Users)
-    {
-        @Html.DisplayFor(u => user)
-        ;
-    }
+<div class="users-info">
+    <div class="user-list-header">Список пользователей</div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Логин</th>
+                <th>Роль</th>
+                <th>ФИО</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.Login</td>
+                    <td>@user.Role.Name</td>
+                    <td>@user.FullName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
+
+@section Scripts {
+    <script src="~/js/administration.js"></script>
+}
