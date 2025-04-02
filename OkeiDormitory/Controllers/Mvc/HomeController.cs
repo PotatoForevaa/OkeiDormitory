@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OkeiDormitory.Data;
 using OkeiDormitory.Models.Entities;
+using OkeiDormitory.Models.ViewModels;
 
 namespace OkeiDormitory.Controllers.Mvc
 {
@@ -40,7 +41,12 @@ namespace OkeiDormitory.Controllers.Mvc
         [Authorize(Roles = "Admin,Administration")]
         public async Task<IActionResult> Administration()
         {
-            return View();
+            var users = await _context.Users.ToListAsync();
+            var vm = new AdministrationViewModel()
+            {
+                Users = users
+            };
+            return View(vm);
         }
 
         [Route("[controller]/Import")]

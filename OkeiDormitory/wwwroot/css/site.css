@@ -77,13 +77,13 @@ body header {
     color: #cccccc;
 }
 
-.feed-container {
+.container {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.feed {
+.content {
     background-color: white;
     margin-top: 100px;
     margin-bottom: 100px;

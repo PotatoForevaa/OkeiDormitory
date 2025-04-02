@@ -1,9 +1,13 @@
-﻿@{
+﻿@model OkeiDormitory.Models.ViewModels.AdministrationViewModel;
+@{
     ViewData["Title"] = "Администрирование";
     Layout = "_Layout";
 }
 
-<div class="feed-container">
-    <div class="feed">
-    </div>
+<div class="user-list">
+    @foreach (var user in Model.Users)
+    {
+        @Html.DisplayFor(u => user)
+        ;
+    }
 </div>
