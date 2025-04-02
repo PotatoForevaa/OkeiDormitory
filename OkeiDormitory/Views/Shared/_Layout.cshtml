@@ -7,6 +7,36 @@
         <link href="~/css/site.css" rel="stylesheet" asp-append-version="true"/>
     </head>
     <body>
-        @RenderBody()
+        <header>
+            <div class="header-elements">
+                <div class="nav-button" id="nav-feed-button" data-link="feed">
+                    <p>Лента</p>
+                </div>
+            @if (User.IsInRole("Inspector") || User.IsInRole("Admin") || User.IsInRole("Administration"))
+            {
+                <div class="nav-button" id="nav-scan-button" data-link="inspection">
+                    <p>Проверить комнату</p>
+                </div>
+            }
+            @if (User.IsInRole("Administration") || User.IsInRole("Admin"))
+            {
+                <div class="nav-button" id="nav-admin-button" data-link="administration">
+                    <p>Администрирование</p>
+                </div>
+            }
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="nav-button" id="nav-import-button" data-link="import">
+                    <p>Импорт данных</p>
+                </div>                
+            }
+            </div>
+        </header>
+        <div class="main-content">
+            @RenderBody()
+        </div>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/js/site.js"></script>
+        @RenderSection("Scripts", false)
     </body>
 </html>

@@ -16,7 +16,7 @@ namespace OkeiDormitory
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddDbContext<DormitoryDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("HomeConnection"))
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
                 .UseSeeding((context, _) =>
                 {
                     if (!context.Set<Role>().Any(r => r.Name == "Admin"))
@@ -41,9 +41,17 @@ namespace OkeiDormitory
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
+                    options.LoginPath = "/login";
                     options.Cookie.HttpOnly = true;
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
                     options.SlidingExpiration = true;
+
+                    
+                    options.Events.OnRedirectToAccessDenied = context =>
+                    {
+                        context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                        return Task.CompletedTask;
+                    };
                 });
             builder.Services.AddAuthorization();
 

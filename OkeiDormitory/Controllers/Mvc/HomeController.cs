@@ -21,9 +21,31 @@ namespace OkeiDormitory.Controllers.Mvc
             _context = context;
         }
 
-        [Route("home")]
-        [Authorize]
-        public async Task<IActionResult> Index()
+        [Route("/")]
+        [Route("[controller]")]
+        [Route("[controller]/Feed")]
+        public async Task<IActionResult> Feed()
+        {
+            return View();
+        }
+
+        [Route("[controller]/Inspection")]
+        [Authorize(Roles = "Inspector,Admin,Administration")]
+        public async Task<IActionResult> Inspection(int? roomNumber)
+        {
+            return View();
+        }
+
+        [Route("[controller]/Administration")]
+        [Authorize(Roles = "Admin,Administration")]
+        public async Task<IActionResult> Administration()
+        {
+            return View();
+        }
+
+        [Route("[controller]/Import")]
+        [Authorize(Roles = "Admin,Administration")]
+        public async Task<IActionResult> Import()
         {
             return View();
         }

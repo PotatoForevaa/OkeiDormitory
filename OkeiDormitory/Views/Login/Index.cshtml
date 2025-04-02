@@ -1,12 +1,26 @@
 ﻿@{
     ViewData["Title"] = "Вход";
-    Layout = "_Layout";
 }
-<div class="login">
-    <form>
-        <label>Логин</label>
-        <input type="text" id="login" />
-        <label>Пароль</label>
-        <input type="password" id="password" maxlength="20" />
-    </form>
-</div>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
+</head>
+<body>
+    <div class="login">
+        <form>
+            <label>Логин</label>
+            <input type="text" id="login" maxlength="20" />
+            <label>Пароль</label>
+            <input type="password" id="password" maxlength="20" />
+            <input type="submit" value="Войти" id="form-submit" />
+        </form>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/login.js"></script>
+</body>
+</html>

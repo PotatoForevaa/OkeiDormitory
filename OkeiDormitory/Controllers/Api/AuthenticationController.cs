@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using OkeiDormitory.Data;
+using OkeiDormitory.Models.DTOs;
 using OkeiDormitory.Models.Entities;
 using OkeiDormitory.Services;
 using System.Security.Claims;
@@ -25,9 +27,9 @@ namespace OkeiDormitory.Controllers.Api
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(string password, string login)
+        public async Task<IActionResult> Login([FromBody] LoginData loginData)
         {
-            var loginResult = await _accountService.Login(password, login);
+            var loginResult = await _accountService.Login(loginData.Password, loginData.Login);
             if (!loginResult) return Unauthorized("Неверный логин или пароль!");
             return Ok("Успешная авторизация");
         }

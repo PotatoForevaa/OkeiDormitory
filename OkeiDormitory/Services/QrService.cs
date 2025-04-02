@@ -20,14 +20,14 @@ namespace OkeiDormitory.Services
                 string outputPath;
                 if (outputDir == null)
                 {
-                    outputPath = Path.Combine("wwwroot", $"Room{room.Number}Qr.pdf");
+                    outputPath = Path.Combine("wwwroot", "QrCodes", $"Room{room.Number}Qr.pdf");
                 }
                 else
                 {
                     outputPath = Path.Combine(outputDir, $"Room{room.Number}Qr.pdf");
                 }
 
-                var qrData = qrGenerator.CreateQrCode($"{room.Number}", QRCodeGenerator.ECCLevel.Q);
+                var qrData = qrGenerator.CreateQrCode(@"http://localhost:5025/home/inspection?roomNumber=" + $"{room.Number}", QRCodeGenerator.ECCLevel.Q);
                 PdfByteQRCode qrCode = new PdfByteQRCode(qrData);
                 var qrPdfBytes = qrCode.GetGraphic(20);
                 File.WriteAllBytes(outputPath, qrPdfBytes);
