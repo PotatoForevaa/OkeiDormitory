@@ -1,5 +1,40 @@
 ﻿@{
-    ViewData["Title"] = "QR сканнер";
+    ViewData["Title"] = "Проверка комнаты";
     Layout = "_Layout";
 }
 
+<div class="inspection">
+    <form>
+        <label>Номер комнаты</label>
+        <input type="number" min="1" max="999" inputmode="numeric" id="roomNumber" name="roomNumber" value="@ViewData["RoomNumber"]" required/>
+        <label>Фотографии</label>
+        <input type="file" accept="image/*" name="files" id="files" multiple/>
+        <div class="image-preview">
+
+        </div>
+        <label>Комментарий к оценке</label>
+        <textarea rows="8" name="comment" id="comment"></textarea>
+        <div class="rating">
+            <input type="radio" id="star5" value="5" name="rating" />
+            <label for="star5">⭐</label>
+
+            <input type="radio" id="star4" value="4" name="rating" />
+            <label for="star4">⭐</label>
+
+            <input type="radio" id="star3" value="3" name="rating" />
+            <label for="star3">⭐</label>
+
+            <input type="radio" id="star2" value="2" name="rating" />
+            <label for="star2">⭐</label>
+
+            <input type="radio" id="star1" value="1" name="rating" />
+            <label for="star1">⭐</label>
+        </div>
+        <label class="error">Выберите оценку</label>
+        <button type="submit">Отправить оценку</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="~/js/inspection.js"></script>
+}

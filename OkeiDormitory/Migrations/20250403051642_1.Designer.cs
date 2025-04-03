@@ -12,8 +12,8 @@ using OkeiDormitory.Data;
 namespace OkeiDormitory.Migrations
 {
     [DbContext(typeof(DormitoryDbContext))]
-    [Migration("20250401112844_initial")]
-    partial class initial
+    [Migration("20250403051642_1")]
+    partial class _1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,9 @@ namespace OkeiDormitory.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("InspectorId")
                         .HasColumnType("int");

@@ -43,14 +43,20 @@ namespace OkeiDormitory.Controllers.Api
             return Ok("Регистрация успешна");
         }
 
-        [HttpGet("HashAdminPassword")]
-        public async Task<IActionResult> HashAdminPassword(string password)
+        [HttpGet("CreateAdminUser")]
+        public async Task<IActionResult> CreateAdminUser(string password)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Login == "Admin");
+            var user = new User()
+            {
+                FullName = "Админов Админ Админович",
+                Login = "Admin",
+                Password = password,
+                Role = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Admin")
+            };
             PasswordHasher <User> hasher = new PasswordHasher<User>();
             var newPassword = hasher.HashPassword(user, password);
             user.Password = newPassword;
-            _context.Users.Update(user);
+            await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
             return Ok(user.Password);
         }

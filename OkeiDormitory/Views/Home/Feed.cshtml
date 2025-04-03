@@ -1,8 +1,26 @@
-﻿@{
+﻿@model OkeiDormitory.Models.ViewModels.FeedViewModel;
+@{
     ViewData["Title"] = "Лента";
     Layout = "_Layout";
 }
 
+<div class="feed">
+    @foreach(var assessment in Model.Assessments)
+    {
+        <div class="assessment">
+            <h2></h2>
+            @if (assessment.Photos != null)
+            {
+                <div class="images">
+                    @foreach (var photo in assessment.Photos)
+                    {
+                        <img src="~/@(photo.Path.Replace(@"\", "/"))"/>
+                    }
+                </div>                
+            }
+        </div>
+    }
+</div>
 
 
 @section Scripts {

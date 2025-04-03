@@ -8,37 +8,43 @@
     </head>
     <body>
         <header>
-            <div class="header-elements">
-                <div class="nav-button" id="nav-feed-button" data-link="feed">
-                    <p>Лента</p>
-                </div>
-            @if (User.IsInRole("Inspector") || User.IsInRole("Admin") || User.IsInRole("Administration"))
-            {
-                <div class="nav-button" id="nav-scan-button" data-link="inspection">
-                    <p>Проверить комнату</p>
-                </div>
-            }
-            @if (User.IsInRole("Administration") || User.IsInRole("Admin"))
-            {
-                <div class="nav-button" id="nav-admin-button" data-link="administration">
-                    <p>Администрирование</p>
-                </div>
-            }
-            @if (User.IsInRole("Admin"))
-            {
-                <div class="nav-button" id="nav-import-button" data-link="import">
-                    <p>Импорт данных</p>
-                </div>                
-            }
-            </div>
-        </header>
-        <div class="main-content">
-            <div class="container">
-                <div class="content">
-                    @RenderBody()
-                </div>
-            </div>
-        </div>
+            <nav>
+                <ul>
+                    <li>
+                        <button id="nav-feed-button" data-link="feed">
+                            <p>Лента</p>
+                        </button>
+                    </li>
+                @if (User.IsInRole("Inspector") || User.IsInRole("Admin") || User.IsInRole("Administration"))
+                {
+                    <li>
+                        <button id="nav-scan-button" data-link="inspection">
+                            <p>Проверить комнату</p>
+                        </button>
+                    </li>
+                }
+                @if (User.IsInRole("Administration") || User.IsInRole("Admin"))
+                {
+                    <li>
+                        <button id="nav-admin-button" data-link="administration">
+                            <p>Администрирование</p>
+                        </button>
+                    </li>
+                }
+                @if (User.IsInRole("Admin"))
+                {
+                    <li>
+                        <button id="nav-import-button" data-link="import">
+                            <p>Импорт данных</p>
+                        </button>
+                    </li>
+                }
+                </ul>
+            </nav>
+        </header>        
+        <main>
+            @RenderBody()
+        </main>
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/js/site.js"></script>
         @RenderSection("Scripts", false)

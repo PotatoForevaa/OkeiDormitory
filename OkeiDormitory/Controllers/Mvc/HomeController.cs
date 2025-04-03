@@ -27,13 +27,19 @@ namespace OkeiDormitory.Controllers.Mvc
         [Route("[controller]/Feed")]
         public async Task<IActionResult> Feed()
         {
-            return View();
+            var assessments = await _context.Assessments.Include(a => a.Photos).ToListAsync();
+            var vm = new FeedViewModel()
+            {
+                Assessments = assessments,
+            };
+            return View(vm);
         }
 
         [Route("[controller]/Inspection")]
         [Authorize(Roles = "Inspector,Admin,Administration")]
         public async Task<IActionResult> Inspection(int? roomNumber)
         {
+            ViewData["RoomNumber"] = roomNumber;
             return View();
         }
 
