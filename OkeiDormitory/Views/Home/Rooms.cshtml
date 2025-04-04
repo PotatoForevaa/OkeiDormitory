@@ -1,0 +1,57 @@
+﻿@model OkeiDormitory.Models.ViewModels.RoomsViewModel;
+@{
+    ViewData["Title"] = "Комнаты";
+    Layout = "_Layout";
+}
+
+<div class="rooms">
+    <table>
+        <thead>
+            <tr>
+                <th>Номер комнаты</th>
+                <th>Средний рейтинг</th>
+                <th>Награды</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var room in Model.Rooms)
+            {
+                <tr>
+                    <td>
+                        <a href="rooms/@(room.Number)">
+                            @room.Number
+                        </a>
+                    </td>
+                    @{
+                        string rating;
+                        if (room.Assessments.Any())
+                        {
+                            rating = room.Assessments.Average(a => a.Rating).ToString();                            
+                        }
+                        else
+                        {
+                            rating = "-";
+                        }
+                    }
+                    <td>@(rating)</td>
+                    <td>
+                        @if(room.Rewards != null)
+                        {
+                            <ul>
+                                @foreach(var reward in room.Rewards)
+                                {
+                                    <li>@reward.Name</li>
+                                }
+                            </ul>                            
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/rooms.js"></script>
+}

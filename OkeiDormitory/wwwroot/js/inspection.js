@@ -35,11 +35,8 @@
             data: formData,
             processData: false,
             contentType: false,
-            success: function (response) {
-                alert("ураа");
-            },
             error: function (xhr, status, error) {
-                alert("Ошибка при отправке формы: " + error);
+                console.log("Ошибка при отправке формы: " + error);
             }
         });
     });

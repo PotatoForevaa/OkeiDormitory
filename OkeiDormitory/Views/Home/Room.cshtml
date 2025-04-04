@@ -1,0 +1,27 @@
+﻿@model OkeiDormitory.Models.Entities.Room;
+@{
+    var title = "Комната " + @Model.Number;
+    ViewData["Title"] = title;
+    Layout = "_Layout";
+}
+
+<div class="room">
+    @if (User.IsInRole("Inspector") || User.IsInRole("Admin"))
+    {
+        <div class="add-reward">
+            <div class="add-reward-header">Наградить</div>
+            <form>
+                <input style="display: none" value="@(Model.Number)" id="roomNumber"/>
+                <label>Название награды</label>
+                <input name="name" required/>
+                <label>Описание</label>
+                <textarea name="description" required></textarea>
+                <button type="submit">Отправить</button>
+            </form>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script src="~/js/room.js"></script>
+}

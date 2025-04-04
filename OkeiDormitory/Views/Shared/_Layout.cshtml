@@ -15,6 +15,11 @@
                             <p>Лента</p>
                         </button>
                     </li>
+                    <li>
+                        <button id="nav-feed-button" data-link="rooms">
+                            <p>Комнаты</p>
+                        </button>
+                    </li>
                 @if (User.IsInRole("Inspector") || User.IsInRole("Admin") || User.IsInRole("Administration"))
                 {
                     <li>

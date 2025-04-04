@@ -197,12 +197,15 @@ main {
     max-width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
 }
 
-.assessment-images img {
-    border-radius: 5px;
-    max-width: 100%;
-}
+    .assessment-images img {
+        border-radius: 5px;
+        width: 100%;
+        max-height: 200px;
+        object-fit: cover;
+    }
 
 .assessment-rating {
     font-size: 24px;
@@ -257,4 +260,53 @@ td {
     padding-bottom: 15px;
     padding-right: 15px;
     display: none;
+}
+
+.import {
+    font-size: 20px;
+}
+
+.import-header {
+    margin: 15px;
+    background: rgba(0,0,0,0.1);
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.import-header:hover {
+    cursor: pointer;
+    user-select: none;
+}
+
+.import form{
+    margin: 15px;
+    display: none;
+}
+
+.rooms {
+    margin: 15px;
+    box-sizing: border-box;
+}
+
+.rooms table {
+    width: 100%;
+}
+
+.room {
+    margin: 15px;
+}
+
+.add-reward-header {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.room form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.room form button {
+    height: 25px;
 }

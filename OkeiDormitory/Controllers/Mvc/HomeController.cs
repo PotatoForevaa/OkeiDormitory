@@ -48,6 +48,23 @@ namespace OkeiDormitory.Controllers.Mvc
             return View();
         }
 
+        [Route("[controller]/Rooms")]
+        public async Task<IActionResult> Rooms()
+        {
+            var vm = new RoomsViewModel()
+            {
+                Rooms = await _context.Rooms.Include(r => r.Rewards).Include(r => r.Assessments).ToListAsync()
+            };
+            return View(vm);
+        }
+
+        [Route("[controller]/Rooms/{roomNumber}")]
+        public async Task<IActionResult> Room(int roomNumber)
+        {
+            var room = await _context.Rooms.Include(r => r.Assessments).Include(r => r.Rewards).FirstOrDefaultAsync(r => r.Number == roomNumber);
+            return View(room);
+        }
+
         [Route("[controller]/Administration")]
         [Authorize(Roles = "Admin,Administration")]
         public async Task<IActionResult> Administration()
