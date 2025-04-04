@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OkeiDormitory.Data;
+using OkeiDormitory.Models.Entities;
 using QRCoder;
 
 
@@ -32,6 +33,16 @@ namespace OkeiDormitory.Services
                 var qrPdfBytes = qrCode.GetGraphic(20);
                 File.WriteAllBytes(outputPath, qrPdfBytes);
             }
+        }
+
+        public void CreateQrCode(int roomNumber)
+        {
+            var qrGenerator = new QRCodeGenerator();
+            var outputPath = Path.Combine("wwwroot", "QrCodes", $"Room{roomNumber}Qr.pdf");
+            var qrData = qrGenerator.CreateQrCode(@"http://localhost:5025/home/inspection?roomNumber=" + $"{roomNumber}", QRCodeGenerator.ECCLevel.Q);
+            PdfByteQRCode qrCode = new PdfByteQRCode(qrData);
+            var qrPdfBytes = qrCode.GetGraphic(20);
+            File.WriteAllBytes(outputPath, qrPdfBytes);
         }
     }
 }

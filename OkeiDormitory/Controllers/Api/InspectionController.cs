@@ -80,6 +80,7 @@ namespace OkeiDormitory.Controllers.Api
                 Rating = Convert.ToInt32(rating),
                 Room = room,
                 Photos = photos,
+                DateTime = DateTime.Now,
             };
             
             await _context.AddAsync(assessment);

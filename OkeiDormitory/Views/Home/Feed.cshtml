@@ -8,16 +8,30 @@
     @foreach(var assessment in Model.Assessments)
     {
         <div class="assessment">
-            <h2></h2>
+            <div class="assessment-header">
+                <h2>Комната @assessment.Room.Number</h2>
+                <label>@assessment.DateTime.ToString("g")</label>
+            </div>
+            <p>@assessment.Comment</p>
             @if (assessment.Photos != null)
             {
-                <div class="images">
+                <div class="assessment-images">
                     @foreach (var photo in assessment.Photos)
                     {
                         <img src="~/@(photo.Path.Replace(@"\", "/"))"/>
                     }
                 </div>                
             }
+
+            <div class="assessment-header">
+                <div class="assessment-rating">
+                    @for (int i = 1; i <= assessment.Rating; i++)
+                    {
+                        <label>⭐</label>
+                    }
+                </div>
+                <label>@assessment.Inspector.FullName</label>
+            </div>
         </div>
     }
 </div>

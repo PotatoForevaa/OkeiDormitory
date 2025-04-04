@@ -48,7 +48,7 @@ nav button {
     border: 0;
     border-right: 5px solid rgba(0,0,0,0.1);
     border-bottom: 5px solid rgba(0,0,0,0.1);
-    background: rgba(0,0,0,0.1);
+    background: rgba(255,255,255,1);
     outline: 0;
     font-size: 24px;    
 } 
@@ -95,31 +95,10 @@ main {
     margin-top: 50px;
     margin-bottom: 50px;
     min-width: 600px;
-    min-height: 500px;
+    max-width: 300px;
     border-radius: 20px;
 }
 
-.users-info{
-    font-size: 20px;
-    padding: 15px;
-}
-
-.users-info table {
-    font-size: 16px;
-    display: none;
-    width: 100%;
-}
-
-.user-list-header {
-    background: rgba(0,0,0,0.1);
-    border-radius: 5px;
-    padding: 5px;
-}
-
-.user-list-header:hover {
-    cursor: pointer;
-    user-select: none;
-}
 
 .inspection {
     padding: 15px;
@@ -173,4 +152,109 @@ main {
 
 .rating label {
     user-select: none;
+}
+
+
+.feed {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.feed h2 {
+    margin: 0;
+    margin-bottom: 5px;
+    
+}
+
+.assessment {
+    background: rgba(0,0,0,0.1);
+    padding: 15px;
+    border-radius: 15px;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.assessment-header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.assessment-header label {
+    font-size: 16px;
+}
+
+.assessment p {
+    max-width: 500px;
+}
+
+.assessment-images {
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.assessment-images img {
+    border-radius: 5px;
+    max-width: 100%;
+}
+
+.assessment-rating {
+    font-size: 24px;
+}
+
+.users-info{
+    font-size: 20px;
+    padding: 15px;
+}
+
+.users-info table {
+    font-size: 16px;
+    display: none;
+    width: 100%;
+}
+
+td {
+    text-align: center;
+}
+
+.user-list-header {
+    background: rgba(0,0,0,0.1);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.user-list-header:hover {
+    cursor: pointer;
+    user-select: none;
+}
+
+
+.qr-download-header {
+    margin: 15px;
+    background: rgba(0,0,0,0.1);
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.qr-download-header:hover{
+    cursor: pointer;
+    user-select: none;
+}
+
+.qr-download {
+    box-sizing: border-box;
+    font-size: 20px;
+}
+
+.qr-download form {
+    padding-left: 15px;
+    padding-bottom: 15px;
+    padding-right: 15px;
+    display: none;
 }

@@ -27,11 +27,16 @@ namespace OkeiDormitory.Controllers.Mvc
         [Route("[controller]/Feed")]
         public async Task<IActionResult> Feed()
         {
-            var assessments = await _context.Assessments.Include(a => a.Photos).ToListAsync();
+            var assessments = await _context.Assessments
+                .Include(a => a.Photos)
+                .Include(a => a.Inspector)
+                .Include(a => a.Room).OrderByDescending(a => a.DateTime)
+                .ToListAsync();
             var vm = new FeedViewModel()
             {
                 Assessments = assessments,
             };
+
             return View(vm);
         }
 

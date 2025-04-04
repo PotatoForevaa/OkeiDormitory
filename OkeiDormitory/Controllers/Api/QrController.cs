@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OkeiDormitory.Data;
@@ -24,10 +25,20 @@ namespace OkeiDormitory.Controllers.Api
             return Ok();
         }
 
+        [Authorize]
         [HttpGet("DownloadQr")]
         public async Task<IActionResult> DownloadQr(int roomNumber)
         {
-            return Ok();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "QrCodes", $"Room{roomNumber}Qr.pdf");
+            try
+            {
+                return File(await System.IO.File.ReadAllBytesAsync(filePath), "application/pdf", Path.GetFileName(filePath));
+            }
+            catch
+            {
+                _qrService.CreateQrCode(roomNumber);
+                return File(await System.IO.File.ReadAllBytesAsync(filePath), "application/pdf", Path.GetFileName(filePath));
+            }
         }
     }
 }
